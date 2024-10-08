@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
   <title>Jonathan's Terminal</title>
   <style>
@@ -7,7 +9,8 @@
       background-color: #1e1e1e;
       color: #d4d4d4;
       font-family: 'Courier New', Courier, monospace;
-      margin: 0;
+      margin: 2%;
+      font-size: 16px; /* Base font size */
     }
     #terminal {
       position: absolute;
@@ -20,9 +23,9 @@
       border: none;
       resize: none;
       outline: none;
-      padding: 10px;
+      padding: 2%;
       box-sizing: border-box;
-      font-size: 1.5em;
+      font-size: 1.2em;
     }
   </style>
 </head>
@@ -31,17 +34,17 @@
   <script>
     const terminal = document.getElementById('terminal');
 
-    function adjustFontSize() {
-      console.log('Adjusting font size for width:', window.innerWidth);
-      if (window.innerWidth <= 768) {
-        terminal.style.fontSize = '8em';
-      } else {
-        terminal.style.fontSize = '1.5em';
-      }
-    }
+    // function adjustFontSize() {
+    //   console.log('Adjusting font size for width:', window.innerWidth);
+    //   if (window.innerWidth <= 768) {
+    //     terminal.style.fontSize = '2em';
+    //   } else {
+    //     terminal.style.fontSize = '1.5em';
+    //   }
+    // }
 
-    window.addEventListener('resize', adjustFontSize);
-    window.addEventListener('DOMContentLoaded', adjustFontSize);
+    // window.addEventListener('resize', adjustFontSize);
+    // window.addEventListener('DOMContentLoaded', adjustFontSize);
     
     const prompt = "jtremblay@terminal:~$ ";
     // terminal.value = prompt;
