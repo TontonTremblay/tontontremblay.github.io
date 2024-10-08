@@ -35,8 +35,7 @@
   <script>
     const terminal = document.getElementById('terminal');
     const prompt = "jtremblay@terminal:~$ ";
-    let promptCounter = 1;
-    terminal.value = `${prompt}${promptCounter} `;
+    terminal.value = prompt;
     // "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
 
     terminal.addEventListener('keydown', function(event) {
@@ -49,14 +48,14 @@
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
         if (input.trim() === '') {
-          terminal.value += `\n${prompt}${promptCounter} `;
+          terminal.value += `\n${prompt}`;
         } else {
           const fullChat = terminal.value.split('\n').slice(0, -1).join('\n');
           const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
           fetch(url)
             .then(response => response.text())
             .then(data => {
-              terminal.value += `\n > ${data}\n\n${prompt}${++promptCounter} `;
+              terminal.value += `\n > ${data}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
               const maxLines = 100;
               const lines = terminal.value.split('\n');
@@ -66,7 +65,7 @@
               }
             })
             .catch(error => {
-              terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n${prompt}${++promptCounter} `;
+              terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
             });
         }
