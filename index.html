@@ -46,14 +46,24 @@
                 return;
             }
             const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command)}`;
-            const processingMessage = term.echo('Processing...');
+            term.echo('Processing...').freeze();
+            const processingIndex = term.last_index();
+            
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
-                    term.update(processingMessage, '[[;#1e90ff;]\n' + data.replace(/^>+/gm, '') + ']\n');
+                    // term.update(-1, '');
+                    term.remove_line(processingIndex);
+                    term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']');
                 })
                 .catch(error => {
+                    // term.update(-1, '');
+                    term.remove_line(processingIndex);
                     term.echo('[[;#ff0000;]Error: ' + error.message + ']');
+                })
+                .finally(() => {
+                    term.unfreeze();
+                    term.scroll_to_bottom();
                 });
         }, {
             greetings: "Welcome to Jonathan Tremblay's terminal",
