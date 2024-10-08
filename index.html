@@ -31,22 +31,34 @@
 <body>
     <div id="terminal"></div>
     <script>
-        $('#terminal').terminal({
-            hello: function(what) {
-                this.echo('[[;#1e90ff;]Hello, ' + what + '. Welcome to this terminal.]');
-            },
-            color: function(color) {
-                this.echo('[[;' + color + ';]This text is ' + color + ']');
-            },
-            help: function() {
-                this.echo('Available commands:');
-                this.echo('  hello <name> - Greet someone');
-                this.echo('  color <color> - Display text in specified color');
-                this.echo('  help - Show this help message');
+        const randomTexts = [
+            "What was Jonathan's PhD on?", 
+            "What is current research on?", 
+            "Where does he work at?", 
+            "What are his favorite things?", 
+            "What is his favorite quote?", 
+            "What is his Erdos number?",
+            "Can he ride a bicycle?",
+            "Can you tell me a secret about him?",
+            "Can I see the pictures he takes?"
+        ];
+
+        $('#terminal').terminal(function(command, term) {
+            if (command !== '') {
+                const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command)}`;
+                term.echo('Processing...');
+                $.get(url).then(function(response) {
+                    term.echo('[[;#1E90FF;]>' + response + ']');
+                }).catch(function(error) {
+                    term.error('Error: ' + error.message);
+                });
+            } else {
+                const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+                term.echo('[[;#32CD32;]' + randomText + ']');
             }
         }, {
-            greetings: 'Welcome to My Fake Terminal\nType "help" for available commands.',
-            prompt: '[[;#ffcc00;]> ]',
+            greetings: "Hello, I am Jonathan Tremblay's terminal. Please ask questions about him.",
+            prompt: '[[;#ffcc00;]jtremblay@terminal:~$ ]',
             exitOnEsc: false
         });
     </script>
