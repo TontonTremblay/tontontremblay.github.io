@@ -26,12 +26,6 @@
             --background: #2e2e2e; /* Dark gray background for terminal */
             --size: 1.2;
         }
-        .prompt {
-            color: #ffcc00; /* Yellow color for prompt */
-        }
-        .answer {
-            color: #1e90ff; /* Dodger blue color for answers */
-        }
     </style>
 </head>
 <body>
@@ -39,10 +33,10 @@
     <script>
         $('#terminal').terminal({
             hello: function(what) {
-                this.echo('<span class="answer">Hello, ' + what + '. Welcome to this terminal.</span>');
+                this.echo('[[;#1e90ff;]Hello, ' + what + '. Welcome to this terminal.]');
             },
             color: function(color) {
-                this.echo('<span class="answer" style="color:' + color + ';">This text is ' + color + '</span>');
+                this.echo('[[;' + color + ';]This text is ' + color + ']');
             },
             help: function() {
                 this.echo('Available commands:');
@@ -52,7 +46,7 @@
             }
         }, {
             greetings: 'Welcome to My Fake Terminal\nType "help" for available commands.',
-            prompt: '<span class="prompt">> </span>',
+            prompt: '[[;#ffcc00;]> ]',
             exitOnEsc: false
         });
     </script>
