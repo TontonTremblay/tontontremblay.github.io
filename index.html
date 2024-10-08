@@ -8,9 +8,9 @@
       font-family: monospace;
     }
     body {
-      background-color: black;
-      color: green;
-      font-family: monospace;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Courier New', Courier, monospace;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,9 +20,9 @@
     #terminal {
       width: 80%;
       height: 80vh;
-      background-color: black;
-      color: green;
-      border: 2px solid green;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      border: 2px solid #007acc;
       resize: none;
       outline: none;
       padding: 10px;
@@ -34,14 +34,15 @@
   <textarea id="terminal" autofocus></textarea>
   <script>
     const terminal = document.getElementById('terminal');
-    terminal.value = "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n";
+    const prompt = "jtremblay@terminal:~$ ";
+    terminal.value = "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
 
     terminal.addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         event.preventDefault();
-        const input = terminal.value.split('\n').pop();
+        const input = terminal.value.split('\n').pop().replace(prompt, '');
         terminal.value += `You asked: ${input}\n`;
-        terminal.value += 'Response: This is a placeholder response.\n\n';
+        terminal.value += 'Response: This is a placeholder response.\n\n' + prompt;
         terminal.scrollTop = terminal.scrollHeight;
       }
     });
