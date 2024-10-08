@@ -30,6 +30,17 @@
   <textarea id="terminal" autofocus spellcheck="false"></textarea>
   <script>
     const terminal = document.getElementById('terminal');
+
+    function adjustFontSize() {
+      if (window.innerWidth <= 768) {
+        terminal.style.fontSize = '3em';
+      } else {
+        terminal.style.fontSize = '1.5em';
+      }
+    }
+
+    window.addEventListener('resize', adjustFontSize);
+    window.addEventListener('load', adjustFontSize);
     const prompt = "jtremblay@terminal:~$ ";
     // terminal.value = prompt;
     terminal.value ="Hello, I am Jonathan Tremblay's terminal. please ask questions about him.\n\n" + prompt;
