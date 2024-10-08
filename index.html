@@ -56,6 +56,11 @@
             .then(data => {
               terminal.value += `\n > ${data}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
+              const maxLines = 100;
+              const lines = terminal.value.split('\n');
+              if (lines.length > maxLines) {
+                terminal.value = lines.slice(lines.length - maxLines).join('\n');
+              }
             })
             .catch(error => {
               terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n` + prompt;
