@@ -1,135 +1,54 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html lang="en">
 <head>
-  <title>Jonathan's Terminal</title>
-  <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
-    body {
-      background-color: #1e1e1e;
-      color: #d4d4d4;
-      font-family: 'Courier New', Courier, monospace;
-      margin: 2%;
-      font-size: 16px; /* Base font size */
-    }
-    .prompt {
-      color: #32CD32; /* Green color for prompt */
-    }
-    .answer {
-      color: #1E90FF; /* Blue color for answers */
-    }
-    #terminal {
-      position: absolute;
-      top: 0;
-      right: 2%;
-      left: 2%;
-      width: 100%;
-      height: 90vh;
-      background-color: #1e1e1e;
-      color: #d4d4d4;
-      border: none;
-      resize: none;
-      outline: none;
-      padding: 2%;
-      box-sizing: border-box;
-      font-size: 1.2em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Terminal Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+        }
+        #terminal {
+            width: 80%;
+            height: 80%;
+        }
+        .terminal {
+            --color: #00ff00;
+            --background: #000000;
+            --size: 1.2;
+        }
+    </style>
 </head>
 <body>
-  <textarea id="terminal" autofocus spellcheck="false"></textarea>
-  <script>
-    const terminal = document.getElementById('terminal');
-
-    // function adjustFontSize() {
-    //   console.log('Adjusting font size for width:', window.innerWidth);
-    //   if (window.innerWidth <= 768) {
-    //     terminal.style.fontSize = '2em';
-    //   } else {
-    //     terminal.style.fontSize = '1.5em';
-    //   }
-    // }
-
-    // window.addEventListener('resize', adjustFontSize);
-    // window.addEventListener('DOMContentLoaded', adjustFontSize);
-    
-    const prompt = "jtremblay@terminal:~$ ";
-    terminal.innerHTML = `<span>Hello, I am Jonathan Tremblay's terminal. please ask questions about him.</span><br><br><span class="prompt">${prompt}</span>`;
-
-    const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
-
-    let firstClickIgnored = false;
-
-    terminal.addEventListener('click', function(event) {
-      if (!firstClickIgnored) {
-        firstClickIgnored = true;
-        return;
-      }
-      const lines = terminal.value.split('\n');
-      const currentLine = lines[lines.length - 1];
-      if (currentLine.startsWith(prompt)) {
-        const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-        terminal.innerHTML = lines.slice(0, -1).join('<br>') + `<br><span class="prompt">${prompt}${randomText}</span>`;
-        terminal.setSelectionRange(terminal.value.length, terminal.value.length);
-      }
-    });
-
-    terminal.addEventListener('keydown', function(event) {
-      const lines = terminal.value.split('\n');
-      const currentLine = lines[lines.length - 1];
-      if (!currentLine.startsWith(prompt)) {
-        terminal.innerHTML = lines.slice(0, -1).join('<br>') + `<br><span class="prompt">${prompt}</span>`;
-      }
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const input = currentLine.replace(prompt, '');
-        if (input.trim() === '') {
-          terminal.value += `\n${prompt}`;
-        } else {
-          const fullChat = terminal.value.split('\n').slice(0, -1).join('\n');
-          const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
-          terminal.innerHTML += `<br>Processing...<br>`;
-          terminal.scrollTop = terminal.scrollHeight;
-
-          fetch(url)
-            .then(response => {
-              terminal.innerHTML = terminal.innerHTML.replace(/<br>Processing...<br>$/, '');
-              return response.text();
-            })
-            .then(data => {
-              terminal.innerHTML += `<br><br><span class="answer">> ${data.replace(/^>+/gm, '')}</span><br><br><span class="prompt">${prompt}</span>`;
-              terminal.scrollTop = terminal.scrollHeight;
-              const maxLines = 100;
-              const lines = terminal.value.split('\n');
-              if (lines.length > maxLines) {
-                terminal.value = lines.slice(lines.length - maxLines).join('\n');
-                terminal.value = prompt //+ terminal.value; // Ensure prompt is at the start
-              }
-            })
-            .catch(error => {
-              terminal.innerHTML += `<br>Error: ${error.message}<br>Fetch URL: ${url}<br><br><span class="prompt">${prompt}</span>`;
-              terminal.scrollTop = terminal.scrollHeight;
-            });
-        }
-      }
-    });
-    function checkFooterVisibility() {
-      const footer = document.getElementById('footer');
-      if (terminal.scrollHeight > terminal.clientHeight) {
-        footer.style.display = 'none';
-      } else {
-        footer.style.display = 'block';
-      }
-    }
-
-    terminal.addEventListener('input', checkFooterVisibility);
-    window.addEventListener('resize', checkFooterVisibility);
-    window.addEventListener('DOMContentLoaded', checkFooterVisibility);
-  </script>
-<!--   <footer id="footer" style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: #d4d4d4; font-family: 'Courier New', Courier, monospace;">
-    interactive terminal
-    about Jonathan Tremblay.
-  </footer>
- -->
+    <div id="terminal"></div>
+    <script>
+        $('#terminal').terminal({
+            hello: function(what) {
+                this.echo('Hello, ' + what + '. Welcome to this terminal.');
+            },
+            color: function(color) {
+                this.echo('[[;' + color + ';]This text is ' + color + ']');
+            },
+            help: function() {
+                this.echo('Available commands:');
+                this.echo('  hello <name> - Greet someone');
+                this.echo('  color <color> - Display text in specified color');
+                this.echo('  help - Show this help message');
+            }
+        }, {
+            greetings: 'Welcome to My Fake Terminal\nType "help" for available commands.',
+            prompt: '> ',
+            exitOnEsc: false
+        });
+    </script>
 </body>
 </html>
