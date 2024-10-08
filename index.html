@@ -34,6 +34,8 @@
         const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
         let firstClickIgnored = false;
 
+        let commandHistory = [];
+
         $('#terminal').click(function() {
             if (!firstClickIgnored) {
                 firstClickIgnored = true;
@@ -49,7 +51,9 @@
             if (command.trim() === '') {
                 return;
             }
-            const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command)}`;
+            commandHistory.push(command);
+            const fullChat = commandHistory.join('\n');
+            const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat)}`;
             term.echo('Processing...').freeze();
             const processingIndex = term.last_index();
             
