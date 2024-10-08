@@ -51,7 +51,8 @@
         if (input.trim() === '') {
           terminal.value += `\n${prompt}${promptCounter} `;
         } else {
-          const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
+          const fullChat = terminal.value.split('\n').slice(0, -1).join('\n');
+          const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
           fetch(url)
             .then(response => response.text())
             .then(data => {
