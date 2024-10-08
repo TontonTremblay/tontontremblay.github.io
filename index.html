@@ -51,7 +51,7 @@
     // terminal.value = prompt;
     terminal.value ="Hello, I am Jonathan Tremblay's terminal. please ask questions about him.\n\n" + prompt;
 
-    const randomTexts = ["What was Jonathan's phd on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "Does he do photography?", "Can I see the pictures he takes?"];
+    const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
 
     let firstClickIgnored = false;
 
@@ -92,7 +92,7 @@
               return response.text();
             })
             .then(data => {
-              terminal.value += `\n> ${data.replace(/^>+/gm, '')}\n\n${prompt}`;
+              terminal.value += `\n\n> ${data.replace(/^>+/gm, '')}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
               const maxLines = 100;
               const lines = terminal.value.split('\n');
