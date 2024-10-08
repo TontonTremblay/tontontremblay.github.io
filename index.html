@@ -37,6 +37,19 @@
 
         let commandHistory = [];
 
+        function wrapText(text, width) {
+            return text.split(' ').reduce((lines, word) => {
+                if (!lines.length) return [word];
+                let lastLine = lines[lines.length - 1];
+                if ((lastLine + ' ' + word).length <= width) {
+                    lines[lines.length - 1] = lastLine + ' ' + word;
+                } else {
+                    lines.push(word);
+                }
+                return lines;
+            }, []).join('\n');
+        }
+
         $('#terminal').click(function() {
             if (!firstClickIgnored) {
                 firstClickIgnored = true;
@@ -82,6 +95,7 @@
             greetings: "Welcome to Jonathan Tremblay's terminal",
             prompt: '[[;#ffcc00;]> ]',
             exitOnEsc: false
+            
         });
     </script>
 </body>
