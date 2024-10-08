@@ -32,6 +32,7 @@
     const terminal = document.getElementById('terminal');
 
     function adjustFontSize() {
+      console.log('Adjusting font size for width:', window.innerWidth);
       if (window.innerWidth <= 768) {
         terminal.style.fontSize = '3em';
       } else {
