@@ -31,7 +31,17 @@
 <body>
     <div id="terminal"></div>
     <script>
-        $('#terminal').terminal(function(command, term) {
+        const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
+        let firstClickIgnored = false;
+
+        $('#terminal').click(function() {
+            if (!firstClickIgnored) {
+                firstClickIgnored = true;
+                return;
+            }
+            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+            $('#terminal').terminal().echo('[[;#32CD32;]> ' + randomText + ']');
+        }).terminal(function(command, term) {
             if (command.trim() === '') {
                 return;
             }
