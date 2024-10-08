@@ -46,7 +46,7 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
-        fetch('/proxy', {
+        fetch('https://openai-worker.tonton-tremblay.workers.dev/?prompt=', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
