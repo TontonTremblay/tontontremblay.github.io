@@ -53,7 +53,13 @@
 
     const randomTexts = ["What was Jonathan's phd on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "Does he do photography?", "Can I see the pictures he takes?"];
 
+    let firstClickIgnored = false;
+
     terminal.addEventListener('click', function(event) {
+      if (!firstClickIgnored) {
+        firstClickIgnored = true;
+        return;
+      }
       const lines = terminal.value.split('\n');
       const currentLine = lines[lines.length - 1];
       if (currentLine.startsWith(prompt)) {
