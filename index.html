@@ -50,6 +50,18 @@
     // terminal.value = prompt;
     terminal.value ="Hello, I am Jonathan Tremblay's terminal. please ask questions about him.\n\n" + prompt;
 
+    const randomTexts = ["Hello World!", "How are you?", "What's up?", "Tell me a joke!", "What's the weather like?"];
+
+    terminal.addEventListener('click', function(event) {
+      const lines = terminal.value.split('\n');
+      const currentLine = lines[lines.length - 1];
+      if (currentLine.startsWith(prompt)) {
+        const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+        terminal.value = lines.slice(0, -1).join('\n') + '\n' + prompt + randomText;
+        terminal.setSelectionRange(terminal.value.length, terminal.value.length);
+      }
+    });
+
     terminal.addEventListener('keydown', function(event) {
       const lines = terminal.value.split('\n');
       const currentLine = lines[lines.length - 1];
