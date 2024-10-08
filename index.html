@@ -38,9 +38,14 @@
     terminal.value = "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
 
     terminal.addEventListener('keydown', function(event) {
+      const lines = terminal.value.split('\n');
+      const currentLine = lines[lines.length - 1];
+      if (!currentLine.startsWith(prompt)) {
+        terminal.value = lines.slice(0, -1).join('\n') + '\n' + prompt;
+      }
       if (event.key === 'Enter') {
         event.preventDefault();
-        const input = terminal.value.split('\n').pop().replace(prompt, '');
+        const input = currentLine.replace(prompt, '');
         terminal.value += `You asked: ${input}\n`;
         terminal.value += 'Response: This is a placeholder response.\n\n' + prompt;
         terminal.scrollTop = terminal.scrollHeight;
