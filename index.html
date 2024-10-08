@@ -47,17 +47,21 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
-        const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
-        fetch(url)
-          .then(response => response.text())
-          .then(data => {
-            terminal.value += `\n > ${data}\n\n${prompt}`;
-            terminal.scrollTop = terminal.scrollHeight;
-          })
-          .catch(error => {
-            terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n` + prompt;
-            terminal.scrollTop = terminal.scrollHeight;
-          });
+        if (input.trim() === '') {
+          terminal.value += `\n${prompt}`;
+        } else {
+          const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
+          fetch(url)
+            .then(response => response.text())
+            .then(data => {
+              terminal.value += `\n > ${data}\n\n${prompt}`;
+              terminal.scrollTop = terminal.scrollHeight;
+            })
+            .catch(error => {
+              terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n` + prompt;
+              terminal.scrollTop = terminal.scrollHeight;
+            });
+        }
       }
     });
   </script>
