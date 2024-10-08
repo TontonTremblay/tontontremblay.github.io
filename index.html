@@ -36,8 +36,8 @@
   <script>
     const terminal = document.getElementById('terminal');
     const prompt = "jtremblay@terminal:~$ ";
-    terminal.value = prompt;
-    // "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
+    // terminal.value = prompt;
+    terminal.value ="Hello, I am Jonathan Tremblay's terminal. please ask questions about him.\n\n" + prompt;
 
     terminal.addEventListener('keydown', function(event) {
       const lines = terminal.value.split('\n');
@@ -74,7 +74,8 @@
     });
   </script>
   <footer style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: #d4d4d4; font-family: 'Courier New', Courier, monospace;">
-    This is an interactive website about Jonathan Tremblay.
+    interactive terminal
+    about Jonathan Tremblay.
   </footer>
 </body>
 </html>
