@@ -53,7 +53,10 @@
                 return;
             }
             commandHistory.push(command);
-            const fullChat = commandHistory.join('\n');
+            const fullChat = commandHistory.map((cmd, index) => {
+                const answer = answerHistory[index] || '';
+                return `${cmd}\n${answer}`;
+            }).join('\n');
             const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat)}`;
             term.echo('Processing...').freeze();
             const processingIndex = term.last_index();
