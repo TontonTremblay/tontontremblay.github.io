@@ -83,8 +83,20 @@
         }
       }
     });
+    function checkFooterVisibility() {
+      const footer = document.getElementById('footer');
+      if (terminal.scrollHeight > terminal.clientHeight) {
+        footer.style.display = 'none';
+      } else {
+        footer.style.display = 'block';
+      }
+    }
+
+    terminal.addEventListener('input', checkFooterVisibility);
+    window.addEventListener('resize', checkFooterVisibility);
+    window.addEventListener('DOMContentLoaded', checkFooterVisibility);
   </script>
-  <footer style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: #d4d4d4; font-family: 'Courier New', Courier, monospace;">
+  <footer id="footer" style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: #d4d4d4; font-family: 'Courier New', Courier, monospace;">
     interactive terminal
     about Jonathan Tremblay.
   </footer>
