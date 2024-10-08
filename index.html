@@ -104,6 +104,20 @@
       }
     }
 
+    let initialHeight = window.innerHeight;
+
+    function checkKeyboardVisibility() {
+      const currentHeight = window.innerHeight;
+      if (initialHeight - currentHeight > 150) { // Threshold for keyboard visibility
+        console.log('Keyboard is likely visible');
+        // Add any specific behavior when the keyboard is visible
+      } else {
+        console.log('Keyboard is likely hidden');
+        // Add any specific behavior when the keyboard is hidden
+      }
+    }
+
+    window.addEventListener('resize', checkKeyboardVisibility);
     terminal.addEventListener('input', checkFooterVisibility);
     window.addEventListener('resize', checkFooterVisibility);
     window.addEventListener('DOMContentLoaded', checkFooterVisibility);
