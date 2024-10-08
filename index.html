@@ -54,7 +54,7 @@
           terminal.scrollTop = terminal.scrollHeight;
         })
         .catch(error => {
-          terminal.value += 'Error: Unable to reach the server.\n\n' + prompt;
+          terminal.value += `Error: ${error.message}\n\n` + prompt;
           terminal.scrollTop = terminal.scrollHeight;
         });
       }
