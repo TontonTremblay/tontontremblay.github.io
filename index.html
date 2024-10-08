@@ -40,13 +40,13 @@
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
-                    term.echo('[[;#1e90ff;]>' + data.replace(/^>+/gm, '') + ']');
+                    term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']');
                 })
                 .catch(error => {
                     term.echo('[[;#ff0000;]Error: ' + error.message + ']');
                 });
         }, {
-            greetings: 'Welcome to My Fake Terminal\nType "help" for available commands.',
+            greetings: "Welcome to Jonathan Tremblay's terminal",
             prompt: '[[;#ffcc00;]> ]',
             exitOnEsc: false
         });
