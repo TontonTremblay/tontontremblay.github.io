@@ -40,7 +40,7 @@
                 return;
             }
             const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-            $('#terminal').terminal().set_prompt(randomText);
+            $('#terminal').terminal().set_command(randomText);
         }).terminal(function(command, term) {
             if (command.trim() === '') {
                 return;
@@ -50,7 +50,7 @@
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
-                    term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']');
+                    term.echo('[[;#1e90ff;]\n' + data.replace(/^>+/gm, '') + ']\n');
                 })
                 .catch(error => {
                     term.echo('[[;#ff0000;]Error: ' + error.message + ']');
