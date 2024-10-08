@@ -32,6 +32,7 @@
     <div id="terminal"></div>
     <script>
         const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
+        let answerHistory = [];
         let firstClickIgnored = false;
 
         let commandHistory = [];
@@ -63,6 +64,7 @@
                     // term.update(-1, '');
                     term.remove_line(processingIndex);
                     term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']');
+                    answerHistory.push(data);
                 })
                 .catch(error => {
                     // term.update(-1, '');
