@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://openai-worker.tonton-tremblay.workers.dev;">
 <head>
   <title>Jonathan's Terminal</title>
   <style>
@@ -52,7 +53,7 @@
           terminal.value += `\n${prompt}`;
         } else {
           const fullChat = terminal.value.split('\n').slice(0, -1).join('\n');
-          const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
+          const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
           fetch(url)
             .then(response => response.text())
             .then(data => {
