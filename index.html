@@ -79,7 +79,8 @@
                 .then(data => {
                     // term.update(-1, '');
                     term.remove_line(processingIndex);
-                    term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']');
+                    const wrappedData = wrapText(data.replace(/^>+/gm, ''), 80); // Assuming 80 is the desired width
+                    term.echo('[[;#1e90ff;]' + wrappedData + ']');
                     answerHistory.push(data);
                 })
                 .catch(error => {
