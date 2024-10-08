@@ -69,10 +69,14 @@
                 firstClickIgnored = true;
                 return;
             }
-            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
             const term = $('#terminal').terminal();
             const currentPrompt = term.get_prompt();
-            term.set_prompt(currentPrompt + randomText);
+            const currentPromptText = currentPrompt.replace('[[;#ffcc00;]jtremblay@terminal:~$ ]', '').trim();
+
+            if (randomTexts.includes(currentPromptText)) {
+                const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+                term.set_prompt('[[;#ffcc00;]jtremblay@terminal:~$ ]' + randomText);
+            }
         });
     </script>
 </body>
