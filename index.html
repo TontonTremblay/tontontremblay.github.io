@@ -46,22 +46,17 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
-        fetch('https://openai-worker.tonton-tremblay.workers.dev/?prompt=', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ prompt: input })
-        })
-        .then(response => response.json())
-        .then(data => {
-          terminal.value += `Response: ${data}\n;
-          terminal.scrollTop = terminal.scrollHeight;
-        })
-        .catch(error => {
-          terminal.value += `Error: ${error.message}\n\n` + prompt;
-          terminal.scrollTop = terminal.scrollHeight;
-        });
+        const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            terminal.value += `Response: ${data}\n`;
+            terminal.scrollTop = terminal.scrollHeight;
+          })
+          .catch(error => {
+            terminal.value += `Error: ${error.message}\n\n` + prompt;
+            terminal.scrollTop = terminal.scrollHeight;
+          });
       }
     });
   </script>
