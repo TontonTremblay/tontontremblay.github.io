@@ -80,7 +80,10 @@
           terminal.scrollTop = terminal.scrollHeight;
 
           fetch(url)
-            .then(response => response.text())
+            .then(response => {
+              terminal.value = terminal.value.replace(/\nProcessing...\n$/, '');
+              return response.text();
+            })
             .then(data => {
               terminal.value += `\n> ${data.replace(/^>+/gm, '')}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
