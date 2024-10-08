@@ -51,7 +51,7 @@
         fetch(url)
           .then(response => response.text())
           .then(data => {
-            terminal.value += `\n > ${data}\n`;
+            terminal.value += `\n > ${data}\n\n${prompt}`;
             terminal.scrollTop = terminal.scrollHeight;
           })
           .catch(error => {
