@@ -55,7 +55,7 @@
           fetch(url)
             .then(response => response.text())
             .then(data => {
-              terminal.value += `\n > ${data}\n\n${prompt}`;
+              terminal.value += `\n> ${data.replace(/^>+/gm, '')}\n\n${prompt}`;
               terminal.scrollTop = terminal.scrollHeight;
               const maxLines = 100;
               const lines = terminal.value.split('\n');
