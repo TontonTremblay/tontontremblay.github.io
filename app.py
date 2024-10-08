@@ -16,5 +16,11 @@ def chat():
     )
     return jsonify(response.choices[0].text.strip())
 
-if __name__ == '__main__':
+import requests
+
+@app.route('/proxy', methods=['POST'])
+def proxy():
+    prompt = request.json.get('prompt')
+    response = requests.get(f"https://openai-worker.tonton-tremblay.workers.dev/?prompt={prompt}")
+    return jsonify(response.text)
     app.run(debug=True)
