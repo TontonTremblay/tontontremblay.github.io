@@ -55,8 +55,7 @@
         })
         .then(response => response.json())
         .then(data => {
-          terminal.value += `You asked: ${input}\n`;
-          terminal.value += `Response: ${data}\n\n` + prompt;
+          terminal.value += `Response: ${data}\n;
           terminal.scrollTop = terminal.scrollHeight;
         })
         .catch(error => {
