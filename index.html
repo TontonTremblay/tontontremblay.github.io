@@ -40,7 +40,7 @@
                 return;
             }
             const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-            $('#terminal').terminal().set_prompt('[[;#32CD32;]> ' + randomText + ' ');
+            $('#terminal').terminal().set_prompt(randomText);
         }).terminal(function(command, term) {
             if (command.trim() === '') {
                 return;
