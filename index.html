@@ -46,14 +46,8 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
-        fetch('/chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ input: input })
-        })
-        .then(response => response.json())
+        fetch(`https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`)
+        .then(response => response.text())
         .then(data => {
           terminal.value += `You asked: ${input}\n`;
           terminal.value += `Response: ${data}\n\n` + prompt;
