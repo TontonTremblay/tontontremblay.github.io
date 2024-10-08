@@ -47,8 +47,8 @@
 
         $('#terminal').terminal(function(command, term) {
             if (command !== '') {
-                const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command)}`;
-                term.echo('Processing...');
+                const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command.replace('[[;#ffcc00;]jtremblay@terminal:~$ ]', '').trim())}`;
+                term.echo('Processing...').set_prompt('');
                 $.get(url).then(function(response) {
                     term.echo('[[;#1E90FF;]>' + response + ']');
                 }).catch(function(error) {
