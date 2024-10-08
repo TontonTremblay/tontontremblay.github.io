@@ -43,6 +43,8 @@
             "Can I see the pictures he takes?"
         ];
 
+        let firstClickIgnored = false;
+
         $('#terminal').terminal(function(command, term) {
             if (command !== '') {
                 const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(command)}`;
@@ -60,6 +62,15 @@
             greetings: "Hello, I am Jonathan Tremblay's terminal. Please ask questions about him.",
             prompt: '[[;#ffcc00;]jtremblay@terminal:~$ ]',
             exitOnEsc: false
+        });
+
+        $('#terminal').click(function() {
+            if (!firstClickIgnored) {
+                firstClickIgnored = true;
+                return;
+            }
+            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+            $('#terminal').terminal().echo('[[;#32CD32;]' + randomText + ']');
         });
     </script>
 </body>
