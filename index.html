@@ -12,6 +12,12 @@
       margin: 2%;
       font-size: 16px; /* Base font size */
     }
+    .prompt {
+      color: #32CD32; /* Green color for prompt */
+    }
+    .answer {
+      color: #1E90FF; /* Blue color for answers */
+    }
     #terminal {
       position: absolute;
       top: 0;
@@ -48,8 +54,7 @@
     // window.addEventListener('DOMContentLoaded', adjustFontSize);
     
     const prompt = "jtremblay@terminal:~$ ";
-    // terminal.value = prompt;
-    terminal.value ="Hello, I am Jonathan Tremblay's terminal. please ask questions about him.\n\n" + prompt;
+    terminal.innerHTML = `<span>Hello, I am Jonathan Tremblay's terminal. please ask questions about him.</span><br><br><span class="prompt">${prompt}</span>`;
 
     const randomTexts = ["What was Jonathan's PhD on?", "What is current research on?", "Where does he work at?", "What are his favorite things?", "What is his favorite quote?", "What is his Erdos number?","Can he ride a bicycle?","Can you tell me a secret about him?","Can I see the pictures he takes?"];
 
@@ -64,7 +69,7 @@
       const currentLine = lines[lines.length - 1];
       if (currentLine.startsWith(prompt)) {
         const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-        terminal.value = lines.slice(0, -1).join('\n') + '\n' + prompt + randomText;
+        terminal.innerHTML = lines.slice(0, -1).join('<br>') + `<br><span class="prompt">${prompt}${randomText}</span>`;
         terminal.setSelectionRange(terminal.value.length, terminal.value.length);
       }
     });
@@ -73,7 +78,7 @@
       const lines = terminal.value.split('\n');
       const currentLine = lines[lines.length - 1];
       if (!currentLine.startsWith(prompt)) {
-        terminal.value = lines.slice(0, -1).join('\n') + '\n' + prompt;
+        terminal.innerHTML = lines.slice(0, -1).join('<br>') + `<br><span class="prompt">${prompt}</span>`;
       }
       if (event.key === 'Enter') {
         event.preventDefault();
@@ -83,16 +88,16 @@
         } else {
           const fullChat = terminal.value.split('\n').slice(0, -1).join('\n');
           const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(fullChat + '\n' + input)}`;
-          terminal.value += `\nProcessing...\n`;
+          terminal.innerHTML += `<br>Processing...<br>`;
           terminal.scrollTop = terminal.scrollHeight;
 
           fetch(url)
             .then(response => {
-              terminal.value = terminal.value.replace(/\nProcessing...\n$/, '');
+              terminal.innerHTML = terminal.innerHTML.replace(/<br>Processing...<br>$/, '');
               return response.text();
             })
             .then(data => {
-              terminal.value += `\n\n> ${data.replace(/^>+/gm, '')}\n\n${prompt}`;
+              terminal.innerHTML += `<br><br><span class="answer">> ${data.replace(/^>+/gm, '')}</span><br><br><span class="prompt">${prompt}</span>`;
               terminal.scrollTop = terminal.scrollHeight;
               const maxLines = 100;
               const lines = terminal.value.split('\n');
@@ -102,7 +107,7 @@
               }
             })
             .catch(error => {
-              terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n${prompt}`;
+              terminal.innerHTML += `<br>Error: ${error.message}<br>Fetch URL: ${url}<br><br><span class="prompt">${prompt}</span>`;
               terminal.scrollTop = terminal.scrollHeight;
             });
         }
