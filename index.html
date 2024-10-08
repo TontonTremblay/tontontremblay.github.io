@@ -39,8 +39,12 @@
                 firstClickIgnored = true;
                 return;
             }
-            const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
-            $('#terminal').terminal().set_command(randomText);
+            const term = $('#terminal').terminal();
+            const currentCommand = term.get_command();
+            if (!randomTexts.includes(currentCommand)) {
+                const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+                term.set_command(randomText);
+            }
         }).terminal(function(command, term) {
             if (command.trim() === '') {
                 return;
