@@ -73,7 +73,7 @@
             const currentPrompt = term.get_prompt();
             const currentPromptText = currentPrompt.replace('[[;#ffcc00;]jtremblay@terminal:~$ ]', '').trim();
 
-            if (randomTexts.includes(currentPromptText)) {
+            if (currentPromptText === '' || randomTexts.includes(currentPromptText)) {
                 const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
                 term.set_prompt('[[;#ffcc00;]jtremblay@terminal:~$ ]' + randomText);
             }
