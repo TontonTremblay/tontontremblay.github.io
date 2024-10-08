@@ -35,7 +35,8 @@
   <script>
     const terminal = document.getElementById('terminal');
     const prompt = "jtremblay@terminal:~$ ";
-    terminal.value = "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
+    terminal.value = prompt;
+    // "Hello, I am Jonathan Tremblay's terminal. Jonathan is a Research scientist at NVIDIA. Please ask me questions about him. Publications, research, photographie, personnal life.\n\n" + prompt;
 
     terminal.addEventListener('keydown', function(event) {
       const lines = terminal.value.split('\n');
@@ -46,15 +47,15 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         const input = currentLine.replace(prompt, '');
-        const url = `https://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
+        const url = `http://openai-worker.tonton-tremblay.workers.dev/?prompt=${encodeURIComponent(input)}`;
         fetch(url)
           .then(response => response.text())
           .then(data => {
-            terminal.value += `Response: ${data}\n`;
+            terminal.value += `\n > ${data}\n`;
             terminal.scrollTop = terminal.scrollHeight;
           })
           .catch(error => {
-            terminal.value += `Error: ${error.message}\nFetch URL: ${url}\n\n` + prompt;
+            terminal.value += `\nError: ${error.message}\nFetch URL: ${url}\n\n` + prompt;
             terminal.scrollTop = terminal.scrollHeight;
           });
       }
