@@ -60,6 +60,7 @@
               const lines = terminal.value.split('\n');
               if (lines.length > maxLines) {
                 terminal.value = lines.slice(lines.length - maxLines).join('\n');
+                terminal.value = prompt + terminal.value; // Ensure prompt is at the start
               }
             })
             .catch(error => {
