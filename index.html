@@ -11,7 +11,7 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 95%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,6 +25,11 @@
             --color: #ffffff; /* White text for terminal */
             --background: #2e2e2e; /* Dark gray background for terminal */
             --size: 1.2;
+        }
+        .terminal .terminal-output div div {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
     </style>
 </head>
@@ -79,8 +84,7 @@
                 .then(data => {
                     // term.update(-1, '');
                     term.remove_line(processingIndex);
-                    const wrappedData = wrapText(data.replace(/^>+/gm, ''), 80); // Assuming 80 is the desired width
-                    term.echo('[[;#1e90ff;]' + wrappedData + ']');
+                    term.echo('[[;#1e90ff;]' + data.replace(/^>+/gm, '') + ']',{keepWords: true});
                     answerHistory.push(data);
                 })
                 .catch(error => {
@@ -95,8 +99,15 @@
         }, {
             greetings: "Welcome to Jonathan Tremblay's terminal",
             prompt: '[[;#ffcc00;]> ]',
-            exitOnEsc: false
-            
+            exitOnEsc: false,
+            formatters: [
+                {
+                    regex: /[\s\S]+/,
+                    replacement: function(string) {
+                        return wrapText(string, this.cols);
+                    }
+                }
+            ]            
         });
     </script>
 </body>
