@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <style>
+    body {
+      background-color: black;
+      color: green;
+      font-family: monospace;
+    }
+    #terminal {
+      width: 100%;
+      height: 90vh;
+      background-color: black;
+      color: green;
+      border: none;
+      resize: none;
+      outline: none;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
 <body>
-  <h1>Hello World</h1>
-  <p>This is my GitHub Pages website.</p>
+  <textarea id="terminal" autofocus></textarea>
+  <script>
+    const terminal = document.getElementById('terminal');
+    terminal.value = 'Welcome to the terminal!\n\n';
+
+    terminal.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const input = terminal.value.split('\n').pop();
+        terminal.value += `You asked: ${input}\n`;
+        terminal.value += 'Response: This is a placeholder response.\n\n';
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    });
+  </script>
 </body>
 </html>
